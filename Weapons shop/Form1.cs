@@ -35,7 +35,7 @@ namespace Weapons_shop
         public Window()
         {
             InitializeComponent();
-
+            newOrderButton.Visible = false;
             storeOwnerPic.Visible = false;
             errorLabel.Visible = false;
             receiptPic.Visible = false;
