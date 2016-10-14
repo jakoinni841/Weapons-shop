@@ -278,9 +278,9 @@
             // storeOwnerPic
             // 
             this.storeOwnerPic.Image = global::Weapons_shop.Properties.Resources.blacksmith_1460826_960_720;
-            this.storeOwnerPic.Location = new System.Drawing.Point(480, 180);
+            this.storeOwnerPic.Location = new System.Drawing.Point(480, 210);
             this.storeOwnerPic.Name = "storeOwnerPic";
-            this.storeOwnerPic.Size = new System.Drawing.Size(242, 359);
+            this.storeOwnerPic.Size = new System.Drawing.Size(242, 329);
             this.storeOwnerPic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.storeOwnerPic.TabIndex = 27;
             this.storeOwnerPic.TabStop = false;
@@ -344,6 +344,7 @@
             this.newOrderButton.TabIndex = 28;
             this.newOrderButton.Text = "New Order";
             this.newOrderButton.UseVisualStyleBackColor = true;
+            this.newOrderButton.Click += new System.EventHandler(this.newOrderButton_Click);
             // 
             // Window
             // 
