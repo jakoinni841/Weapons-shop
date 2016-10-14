@@ -1,4 +1,5 @@
-﻿using System;
+﻿//Jakob Innis, Weapons Shop, Oct 14, 2016.
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Media;
 
 namespace Weapons_shop
 {
@@ -75,7 +77,9 @@ namespace Weapons_shop
             start.Visible = false;
             title1.Visible = false;
             storeOwnerPic.Visible = true;
+
             calculateTotal.Visible = true;
+
             swordPic.Visible = true;
             axePic.Visible = true;
             hammerPic.Visible = true;
@@ -86,15 +90,17 @@ namespace Weapons_shop
             battleaxeBox.Visible = true;
             warhammerBox.Visible = true;
             battleaxeBox.Visible = true;
-            tenderdBox.Visible = true;
+            tenderdBox.Visible = false;
             swordCost.Visible = true;
             shieldCost.Visible = true;
             hammerCost.Visible = true;
             axeCost.Visible = true;
-            receiptButton.Visible = true;
-            changeButton.Visible = true;
-            changeLabel.Visible = true;
-            tenderdLabel.Visible = true;
+
+            receiptButton.Visible = false;
+            changeButton.Visible = false;
+            changeLabel.Visible = false;
+            tenderdLabel.Visible = false;
+
             costText.Visible = true;
             totalLabel.Visible = true;
             taxLabel.Visible = true;
@@ -105,6 +111,9 @@ namespace Weapons_shop
             //Add Shields, Swords, Axes, and Warhammers
             try
             {
+                tenderdBox.Visible = true;
+                changeButton.Visible = true;
+                tenderdLabel.Visible = true;
                 errorLabel.Visible = false;
 
                 axeAmount = Convert.ToDouble(battleaxeBox.Text);
@@ -122,6 +131,9 @@ namespace Weapons_shop
             catch
             {
                 errorLabel.Visible = true;
+                tenderdBox.Visible = false;
+                changeButton.Visible = false;
+                tenderdLabel.Visible = false;
             }
 
             //Total Before Tax
@@ -139,6 +151,8 @@ namespace Weapons_shop
         {
             try
             {
+                changeLabel.Visible = true;
+                receiptButton.Visible = true;
                 tenderd = Convert.ToDouble(tenderdBox.Text);
                 change = tenderd - totalAltogether;
                 changeLabel.Text = "Change " + change.ToString("C");
@@ -146,13 +160,16 @@ namespace Weapons_shop
             catch
             {
                 changeLabel.Text = "Please enter an amount";
+                receiptButton.Visible = false;
             }
 
         }
 
         private void receiptButton_Click(object sender, EventArgs e)
         {
-
+            SoundPlayer player = new SoundPlayer(Properties.Resources.cash);
+            player.Play();
+            Thread.Sleep(6000);
             receiptPic.Visible = true;
             newOrderButton.Visible = true;
             storeOwnerPic.Visible = false;
@@ -204,6 +221,8 @@ namespace Weapons_shop
             totalLabel.Visible = false;
             taxLabel.Visible = false;
 
+            newOrderButton.BringToFront();
+
             Refresh();
 
             Graphics fg = receiptPic.CreateGraphics();
@@ -213,30 +232,41 @@ namespace Weapons_shop
             fg.DrawString("Angus's Weapon Shop", drawFont, drawBrush, 55, 50);
             fg.DrawString("Order Number 1000", drawFont, drawBrush, 55, 65);
             fg.DrawString("Oct 13, 2016", drawFont, drawBrush, 55, 80);
-
+            Thread.Sleep(500);
+           
             fg.DrawString("Swords   " + swordAmount + " @ " + sword, drawFont, drawBrush, 55, 110);
+            Thread.Sleep(500);
             fg.DrawString("Shields  " + shieldAmount + " @ " + shield, drawFont, drawBrush, 55, 125);
+            Thread.Sleep(500);
             fg.DrawString("Axes     " + axeAmount + " @ " + axe, drawFont, drawBrush, 55, 140);
+            Thread.Sleep(500);
             fg.DrawString("Hammers  " + hammerAmount + " @ " + hammer, drawFont, drawBrush, 55, 155);
-
+            Thread.Sleep(500);
+            
             fg.DrawString("Cost     " + totalCost.ToString("C"), drawFont, drawBrush, 55, 185);
+            Thread.Sleep(500);
             fg.DrawString("Tax      " + taxAmount.ToString("C"), drawFont, drawBrush, 55, 200);
+            Thread.Sleep(500);
             fg.DrawString("Total    " + totalAltogether.ToString("C"), drawFont, drawBrush, 55, 215);
-
+            Thread.Sleep(500);
+            
             fg.DrawString("Tenderd  " + tenderd.ToString("C"), drawFont, drawBrush, 55, 245);
+            Thread.Sleep(500);
             fg.DrawString("Change   " + change.ToString("C"), drawFont, drawBrush, 55, 260);
-
+            Thread.Sleep(500);
+  
             fg.DrawString("Have a great day :)", drawFont, drawBrush, 55, 285);
 
         }
 
         private void newOrderButton_Click(object sender, EventArgs e)
         {
-
+            //New Order
             Refresh();
 
-            receiptPic.Visible = true;
-            newOrderButton.Visible = true;
+            receiptPic.Visible = false;
+            newOrderButton.Visible = false;
+
             storeOwnerPic.Visible = true;
             calculateTotal.Visible = true;
             swordPic.Visible = true;
@@ -249,18 +279,42 @@ namespace Weapons_shop
             battleaxeBox.Visible = true;
             warhammerBox.Visible = true;
             battleaxeBox.Visible = true;
-            tenderdBox.Visible = true;
+            tenderdBox.Visible = false;
             swordCost.Visible = true;
             shieldCost.Visible = true;
             hammerCost.Visible = true;
             axeCost.Visible = true;
-            receiptButton.Visible = true;
-            changeButton.Visible = true;
-            changeLabel.Visible = true;
-            tenderdLabel.Visible = true;
+            receiptButton.Visible = false;
+            changeButton.Visible = false;
+            changeLabel.Visible = false;
+            tenderdLabel.Visible = false;
             costText.Visible = true;
             totalLabel.Visible = true;
             taxLabel.Visible = true;
+
+            battleaxeBox.Text = "";
+            warhammerBox.Text = "";
+            swordBox.Text = "";
+            shieldBox.Text = "";
+            changeLabel.Text = "Change";
+            tenderdBox.Text = "";
+            costText.Text = "Cost";
+            taxLabel.Text = "Tax";
+            totalLabel.Text = "Total";
+            axeNumber = 0;
+            shieldNumber = 0;
+            swordNumber = 0;
+            hammerNumber = 0;
+            axeAmount = 0;
+            shieldAmount = 0;
+            hammerAmount = 0;
+            swordAmount = 0;
+            totalCost = 0;
+            taxAmount = 0;
+            totalAltogether = 0;
+            tenderd = 0;
+            change = 0;
+
         }
     }
 }
